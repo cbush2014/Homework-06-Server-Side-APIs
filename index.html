@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    
+
     <title>Weather App</title>
 </head>
 
@@ -20,13 +20,13 @@
     </header>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-4 sidebar">               
+            <div class="col-4 sidebar">
                 <div class="input-group mb-3">
-                    <h3>City Name</h3>
+                    <h3 class="labelCity">City Name</h3>
                     <input type="text" class="form-control" id="searchCity" placeholder="City Name"
                         aria-label="City Name" aria-describedby="button-addon2">
                     <div class="input-group-append">
-                        <button class="btn btn-danger fa fa-search" type="button" id="btnSearch">                            
+                        <button class="btn btn-danger fa fa-search" type="button" id="btnSearch">
                         </button>
                     </div>
                 </div>
@@ -52,63 +52,63 @@
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/55a94f0e16.js" crossorigin="anonymous"></script>
 
-     <!-- Retrieved data will be dumped here -->
-  <div class="city"></div>
-  <div class="wind"></div>
-  <div class="humidity"></div>
-  <div class="temp"></div>
+    <!-- Retrieved data will be dumped here -->
+    <div class="city"></div>
+    <div class="wind"></div>
+    <div class="humidity"></div>
+    <div class="temp"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
 
-    $("#btnSearch").on("click", retrieveWeatherData );
-    
-    function retrieveWeatherData(){
-    // This is our API key
-    var APIKey = "79e9ef0c9561ec71d553efe57a221f25";
+        $("#btnSearch").on("click", retrieveWeatherData);
 
-    // Here we are building the URL we need to query the database
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=" + APIKey;
-    var citySearch = "&q="+$("#searchCity").val();
+        function retrieveWeatherData() {
+            // This is our API key
+            var APIKey = "79e9ef0c9561ec71d553efe57a221f25";
 
-    queryURL += citySearch
-    console.log(queryURL);
-        
-    // Here we run our AJAX call to the OpenWeatherMap API
-    $.ajax({
-      url: queryURL,
-      method: "GET"
-    })
-      // We store all of the retrieved data inside of an object called "response"
-      .then(function(response) {
+            // Here we are building the URL we need to query the database
+            var queryURL = "https://api.openweathermap.org/data/2.5/weather?units=imperial&appid=" + APIKey;
+            var citySearch = "&q=" + $("#searchCity").val();
 
-        // Log the queryURL
-        console.log(queryURL);
-        // Log the resulting object
-        console.log(response);
-        
+            queryURL += citySearch
+            console.log(queryURL);
 
-        // var arrStorage = JSON.parse(localStorage.getItem('weatherbug'));
+            // Here we run our AJAX call to the OpenWeatherMap API
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+                // We store all of the retrieved data inside of an object called "response"
+                .then(function (response) {
 
-        // arrStorage.push(response);
+                    // Log the queryURL
+                    console.log(queryURL);
+                    // Log the resulting object
+                    console.log(response);
 
-        // localStorage.setItem('weatherbug', JSON.stringify(arrStorage));
 
-        // Transfer content to HTML
-        $("#city-data").append($("<h3>" + response.name + " Weather Details</h3>"));
-        // var newDiv = $("<div>");
-        // newDiv.text("<h3>" + response.name + " Weather Details</h3>");
-        // $("#city-data").append(newDiv);
+                    // var arrStorage = JSON.parse(localStorage.getItem('weatherbug'));
 
-        $("#city-data").append($("<div>").text("Wind Speed: " + response.wind.speed));
-        $("#city-data").append($("<div>").text("Humidity: " + response.main.humidity));
-        $("#city-data").append($("<div>").text("Temperature (F) " + response.main.temp));
-        $("<br>");
-    
-      });
-    };
-      </script>
+                    // arrStorage.push(response);
+
+                    // localStorage.setItem('weatherbug', JSON.stringify(arrStorage));
+
+                    // Transfer content to HTML
+                    $("#city-data").append($("<h3>" + response.name + " Weather Details</h3>"));
+                    // var newDiv = $("<div>");
+                    // newDiv.text("<h3>" + response.name + " Weather Details</h3>");
+                    // $("#city-data").append(newDiv);
+
+                    $("#city-data").append($("<div>").text("Wind Speed: " + response.wind.speed));
+                    $("#city-data").append($("<div>").text("Humidity: " + response.main.humidity));
+                    $("#city-data").append($("<div>").text("Temperature (F) " + response.main.temp));
+                    $("<br>");
+
+                });
+        };
+    </script>
 
 </body>
 

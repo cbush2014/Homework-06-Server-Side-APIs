@@ -1,14 +1,14 @@
-
+body {
+  overflow:hidden;
+  height:100vh;
+  width:100vw;
+  color: black;
+}
 .sidebar {
-    height: 100%;
+    height: 100vh;
     width: 20%;
-    /* position: fixed; */
-    /* z-index: 1;
-    top: 0;
-    left: 0; */
+    color: white;
     background-color: rgb(100, 88, 88);
-    /* overflow-x: hidden; */
-    /* transition: 0.5s; */
     padding-top: 60px;
   }
 
@@ -28,4 +28,9 @@ header {
     margin-top: 8px;
     margin-right: 16px;
     font-size: 17px;
+  }
+
+.labelCity {
+width: 100%;
+
   }
