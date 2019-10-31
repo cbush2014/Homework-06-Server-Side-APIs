@@ -1,0 +1,31 @@
+
+.sidebar {
+    height: 100%;
+    width: 20%;
+    /* position: fixed; */
+    /* z-index: 1;
+    top: 0;
+    left: 0; */
+    background-color: rgb(100, 88, 88);
+    /* overflow-x: hidden; */
+    /* transition: 0.5s; */
+    padding-top: 60px;
+  }
+
+header {
+    text-align: center;
+    background-color: black;
+    color:white;
+    padding: 5px;
+}
+
+
+/* Style the search box inside the navigation bar */
+.searchBar input[type=text] {
+    float: right;
+    padding: 6px;
+    border: none;
+    margin-top: 8px;
+    margin-right: 16px;
+    font-size: 17px;
+  }
