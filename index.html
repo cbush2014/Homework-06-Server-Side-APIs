@@ -37,9 +37,7 @@
                     </section>
                 </div>
             </div>
-
         </div>
-
     </div>
 
     <script src="http://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
@@ -52,12 +50,6 @@
         crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/55a94f0e16.js" crossorigin="anonymous"></script>
 
-    <!-- Retrieved data will be dumped here -->
-    <div class="city"></div>
-    <div class="wind"></div>
-    <div class="humidity"></div>
-    <div class="temp"></div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script type="text/javascript">
@@ -65,6 +57,19 @@
         $("#btnSearch").on("click", retrieveWeatherData);
 
         function retrieveWeatherData() {
+
+            // custom code here
+            var currentDateAndTime = Date(Date.now());// exp: Fri Oct 25 2019 17:40:56 GMT-0400 (Eastern Daylight Time)
+            var currentHour = new Date().getHours();//Current hour in military time
+            //testing
+            // currentHour = 13;
+
+            console.log(currentDateAndTime);
+            var d = new Date();
+            var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+            //"Monday, October 28th";
+
             // This is our API key
             var APIKey = "79e9ef0c9561ec71d553efe57a221f25";
 
@@ -87,25 +92,68 @@
                     console.log(queryURL);
                     // Log the resulting object
                     console.log(response);
-
-
                     // var arrStorage = JSON.parse(localStorage.getItem('weatherbug'));
-
-                    // arrStorage.push(response);
-
-                    // localStorage.setItem('weatherbug', JSON.stringify(arrStorage));
+                    var iconImageID = response['weather'][0]['icon'];
+                    var iconImageURL = "http://openweathermap.org/img/w/" + iconImageID + ".png";
+                    // weather description 'main' values are
+                    // 'clouds', 'clear', thunderstorm, drizzle, rain, snow
+                    var weatherDescription = response['weather'][0]['main'].toLowerCase();
+                    var weatherBackgroundImage = '';
+                    // change the image background on the card based on the weather
+                    console.log("weather description: " + weatherDescription);
+                    switch (weatherDescription) {
+                        case 'clouds':
+                            weatherBackgroundImage = "assets/images/scatteredclouds.jpg"
+                            textColor = 'text-body'
+                            break;
+                        case 'clear':
+                            weatherBackgroundImage = 'assets/images/clearsky.jpg'
+                            textColor = 'text-white'
+                            break;
+                        case 'thunderstorm':
+                            weatherBackgroundImage = 'assets/images/thunderstorm.jpg'
+                            textColor = 'text-white'
+                            break;
+                        case 'drizzle':
+                            weatherBackgroundImage = 'assets/images/raindropsbig.jpg'
+                            textColor = 'text-body'
+                            break;
+                        case 'rain':
+                            weatherBackgroundImage = 'assets/images/raindropsbig.jpg'
+                            textColor = 'text-body'
+                            break;
+                        case 'snow':
+                            weatherBackgroundImage = 'assets/images/snowstorm.jpg'
+                            textColor = 'text-body'
+                            break;
+                        default:
+                            weatherBackgroundImage = 'assets/images/clearsky.jpg'
+                            textColor = 'text-white'
+                    }
+ 
+                    // console.log("Background Image: " + weatherBackgroundImage)
 
                     // Transfer content to HTML
-                    $("#city-data").append($("<h3>" + response.name + " Weather Details</h3>"));
-                    // var newDiv = $("<div>");
-                    // newDiv.text("<h3>" + response.name + " Weather Details</h3>");
-                    // $("#city-data").append(newDiv);
+                    var title = response.name + " (" +
+                        d.toLocaleDateString('en-US') + `) <img class='wicon' src=${iconImageURL} alt='weather icon'>`;
 
-                    $("#city-data").append($("<div>").text("Wind Speed: " + response.wind.speed));
-                    $("#city-data").append($("<div>").text("Humidity: " + response.main.humidity));
-                    $("#city-data").append($("<div>").text("Temperature (F) " + response.main.temp));
-                    $("<br>");
+                    var htmlStr = `<div class="card">
+                            <img class="card-img wimage" src=${weatherBackgroundImage} alt='weather background image'>
 
+                            <div class="card-img-overlay ${textColor}">
+                                <h4>${title}</h4>
+                                <div class="card-body">
+                                    <h6>Wind Speed: ${response.wind.speed}</h6>
+                                    <h6>Humidity: ${response.main.humidity}</h6>
+                                    <h6>Temperature (F) ${response.main.temp}</h6>
+                                    <br>
+                                </div>
+                            </div>`
+
+
+                    $("#city-data").append($("<h4>").html(htmlStr));
+                    //
+                    //                    $('.wicon').attr('src', iconImageURL);
                 });
         };
     </script>
